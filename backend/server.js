@@ -19,14 +19,24 @@ if (app.get('env') == 'production') {
   }
 app.use("/equipments", require("./routes/equipments"))
 
-//mongoose connection
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-       const server = app.listen(process.env.PORT || 5000, () => {
-  const port = server.address().port;
-  console.log(`Express is working on port ${port}`);
-});
-    })
-    .catch((error) => {
-        console.log(error)
-    })
+// mongoose connection (serverless-friendly)
+let connPromise;
+async function ensureDB() {
+  if (mongoose.connection.readyState === 1) return;
+  if (!connPromise) {
+    connPromise = mongoose.connect(process.env.MONGO_URI);
+  }
+  return connPromise;
+}
+
+// Export a handler for serverless platforms (e.g., Vercel)
+module.exports = async (req, res) => {
+  try {
+    await ensureDB();
+    return app(req, res);
+  } catch (err) {
+    console.error('DB connection error', err);
+    res.statusCode = 500;
+    res.end('Internal Server Error');
+  }
+};
