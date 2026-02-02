@@ -4,9 +4,7 @@ import { FaRegCalendarCheck } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi"
 import { Link } from 'react-router-dom';
 import LazyLoad from './LazyLoad';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+// Dynamically load Slider and its CSS to reduce main bundle size
 import { flag } from '../assets';
 import PopupForm from './PopupForm';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -14,6 +12,17 @@ import * as Dialog from '@radix-ui/react-dialog';
 const BuyCard = ({img1, img2, img3, img4, img5, name, hours, link, location, price, nairaPrice}) => {
     const [isPopupVisible, setPopupVisible] = useState(false);
     const popUpRef = useRef(null)
+
+    // Dynamically load Slider and CSS to avoid bundling into main chunk
+    const [Slider, setSlider] = useState(null);
+    useEffect(() => {
+        let mounted = true;
+        import('react-slick').then(mod => { if (mounted) setSlider(() => mod.default); }).catch(() => {});
+        // Load styles for slick-carousel
+        import('slick-carousel/slick/slick.css').catch(() => {});
+        import('slick-carousel/slick/slick-theme.css').catch(() => {});
+        return () => { mounted = false; };
+    }, []);
 
     const settings = {
         dots: true,
@@ -27,12 +36,16 @@ const BuyCard = ({img1, img2, img3, img4, img5, name, hours, link, location, pri
     <div className='font-aeonik bg-[#F7F7F6] p-4 pb-6'>
      <div ref={popUpRef}>
         <div className='max-w-xs'>
-            <Slider {...settings}>
+            {Slider ? (
+              <Slider {...settings}>
                 <LazyLoad image={img1} alt={name}/>
                 <LazyLoad image={img2} alt={name} />
                 <LazyLoad image={img3} alt={name} />
                 <LazyLoad image={img5} alt={name} />
-            </Slider>
+              </Slider>
+            ) : (
+              <div className='w-full h-48 bg-gray-100 rounded animate-pulse' />
+            )}
         </div>
         <div>
             <div className='my-4 font-aeonik'>

@@ -1,15 +1,18 @@
+import React, { Suspense } from 'react'
 import Navbar from './componennts/Navabar';
 import { createBrowserRouter, createRoutesFromElements, Route, Outlet, RouterProvider, Link  } from "react-router-dom";
-import Buy from './routes/Buy';
-import Sell from './routes/Sell';
-import About from './routes/About';
-import Kobelco from './pages/Kobelco';
-import Loan from './routes/Loan';
-import LoanForm from './routes/LoanForm';
+
+// Lazy-loaded routes for code-splitting
+const Buy = React.lazy(() => import('./routes/Buy'));
+const Sell = React.lazy(() => import('./routes/Sell'));
+const About = React.lazy(() => import('./routes/About'));
+const Kobelco = React.lazy(() => import('./pages/Kobelco'));
+const Loan = React.lazy(() => import('./routes/Loan'));
+const LoanForm = React.lazy(() => import('./routes/LoanForm'));
+const BuyCategories = React.lazy(() => import('./componennts/BuyCategories'));
+const Home = React.lazy(() => import('./componennts/Home'));
+
 import { FaWhatsapp } from 'react-icons/fa';
-import { useEffect } from 'react';
-import BuyCategories from './componennts/BuyCategories';
-import Home from './componennts/Home';
 
 function App() {
 
@@ -32,7 +35,9 @@ function App() {
   )
   return (
     <div>
-        <RouterProvider router={router} />  
+        <Suspense fallback={<div className='w-full text-center py-8'>Loading…</div>}>
+          <RouterProvider router={router} />  
+        </Suspense>
     </div>
   )
 }
