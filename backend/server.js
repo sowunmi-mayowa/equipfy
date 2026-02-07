@@ -53,13 +53,4 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // Export a handler for serverless platforms (e.g., Vercel)
-module.exports = async (req, res) => {
-  try {
-    await ensureDB();
-    return app(req, res);
-  } catch (err) {
-    console.error("DB connection error", err);
-    res.statusCode = 500;
-    res.end("Internal Server Error");
-  }
-};
+module.exports = app;
