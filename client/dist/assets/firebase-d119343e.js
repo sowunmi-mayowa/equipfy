@@ -1,1 +1,0 @@
-import{P as a,Q as p,R as s}from"./vendor-54bf66f5.js";const t={apiKey:"AIzaSyA40GSIPSoY--XmbhD6Y9sXt2ByrABgwkU",authDomain:"equipfy.firebaseapp.com",projectId:"equipfy",storageBucket:"equipfy.appspot.com",messagingSenderId:"1034408193031",appId:"1:1034408193031:web:966ab68282cb074b834ea2",measurementId:"G-5CN1GMSN50"},e=a(t);p(e);const o=s(e);export{o as d};

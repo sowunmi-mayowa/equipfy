@@ -1,1 +1,0 @@
-import{j as e,K as o}from"./vendor_react-2f0010a0.js";const c=({image:r,placeholder:t,alt:a})=>e.jsx(o.LazyLoadImage,{src:r,effect:"blur",placeholderSrc:t,width:"100%",height:"100%",alt:a});export{c as L};
