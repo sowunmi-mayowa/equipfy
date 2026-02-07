@@ -24,7 +24,10 @@ if (app.get("env") == "production") {
 } else {
   app.use(morgan("dev"));
 }
-app.use("/equipments", require("./routes/equipments"));
+app.use("/api/equipments", require("./routes/equipments"));
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 // mongoose connection (serverless-friendly)
 let connPromise;
