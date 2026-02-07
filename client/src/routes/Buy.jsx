@@ -21,7 +21,7 @@ import Search from "../componennts/Search";
 import { useEffect } from "react";
 import { useState } from "react";
 import Loader from "../componennts/Loader";
-// import { useGetAllEquipments } from "../http/equipments/query";
+import { useGetAllEquipments } from "../http/equipments/query";
 
 const nigerianStates = [
   "Abia",
@@ -72,8 +72,8 @@ const Buy = () => {
   const API_URL = process.env.REACT_APP_BACKEND_URL;
   console.log(API_URL);
 
-  // const { data: equipments } = useGetAllEquipments();
-  // console.log(equipments);
+  const { data: equipments } = useGetAllEquipments();
+  console.log(equipments);
 
   useEffect(() => {
     const fetchEquipments = async () => {
