@@ -21,7 +21,7 @@ import Search from "../componennts/Search";
 import { useEffect } from "react";
 import { useState } from "react";
 import Loader from "../componennts/Loader";
-import { useGetAllEquipments } from "../http/equipments/query";
+// import { useGetAllEquipments } from "../http/equipments/query";
 
 const nigerianStates = [
   "Abia",
